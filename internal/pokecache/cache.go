@@ -41,7 +41,9 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 }
 
 func (c *Cache) reapLoop(interval time.Duration) {
+	// time.NewTicker(d) creates a ticker that sends the current time on its channel every d duration.
 	ticker := time.NewTicker(interval)
+	// run cleanup repeatedly at this interval.
 	for range ticker.C {
 		c.mu.Lock()
 		for key, entry := range c.entries {
